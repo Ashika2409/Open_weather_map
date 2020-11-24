@@ -1,0 +1,29 @@
+import datetime
+import requests
+from pprint import pprint
+url = 'https://samples.openweathermap.org/data/2.5/forecast/hourly?q=London,us&appid=b6907d289e10d714a6e88b30761fae22'
+respons = requests.get(url)
+new = respons.json()
+
+dat1 = datetime.strptime(new['list'][0]['dt_txt'],"%Y-%m-%d %H:%M:%S")
+dat2 = datetime.strptime(new['list'][95]['dt_txt'],"%Y-%m-%d %H:%M:%S")
+new_date = dat2 - dat1
+print(new_date)
+
+for x in range(0,96):
+    tim1 = new['list'][x]['dt_txt']
+    print(tim1)
+    
+for x in range(0,96):
+    temp_min = new['list'][x]['main']['temp_min']
+    temp_max = new['list'][x]['main']['temp_max']
+    print('Minimum temperature :{}'.format(temp_min),'Max temp:{}'.format(temp_max))
+
+for x in range(0,96):
+    id1 = new['list'][x]['weather'][0]['id']
+    if id1 == 800:
+        print(new['list'][x]['weather'][0]['description'])
+    elif id1 == 500:
+        print(new['list'][x]['weather'][0]['description'])
+    else:
+        pass
